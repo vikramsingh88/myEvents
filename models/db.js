@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
-//var dbURI = 'mongodb://localhost/mevents';
-var dbURI = 'mongodb://vikram:password@ds161059.mlab.com:61059/chat';
+var dbURI = 'mongodb://localhost/mevents';
+//var dbURI = 'mongodb://vikram:password@ds161059.mlab.com:61059/chat';
 
 mongoose.connect(dbURI);
 
@@ -55,6 +55,14 @@ var comingSoonSchema = new mongoose.Schema({
 	eventBannerPath : { type : String }
 });
 
+//Score board
+var scoreSchema = new mongoose.Schema({
+	eventName : {type : String},
+	teamName : {type : String},
+	points : {type : String},
+	date : {type : String}
+});
+
 // Build the Team model
 mongoose.model('Team', teamSchema);
 //build team member model
@@ -65,3 +73,5 @@ mongoose.model('Event',eventSchema);
 mongoose.model('Device', deviceSchema);
 //Build coming soon model
 mongoose.model('ComingSoon', comingSoonSchema);
+//Build score board model
+mongoose.model('ScoreBoard', scoreSchema);

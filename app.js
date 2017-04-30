@@ -4,6 +4,7 @@ var team = require('./routes/team.js');
 var events = require('./routes/events.js');
 var device = require('./routes/device.js');
 var comingSoon = require('./routes/comingsoon.js');
+var scoreboard = require('./routes/scoreboard.js');
 
 var app = express();
 
@@ -39,6 +40,9 @@ app.post('/notify', device.notify);
 app.post('/comingsoon', comingSoon.createComingSoon);
 //Get coming soon by name
 app.get('/comingsoon/:eventName', comingSoon.getComingSoon);
+//Create Score board
+app.post('/scoreboard', scoreboard.createScoreBoard);
+app.get('/scoreboard', scoreboard.getScoreBoard);
 
 //for error handling
 app.use(function(req, res) {
