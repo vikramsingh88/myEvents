@@ -41,7 +41,8 @@ var eventSchema = new mongoose.Schema({
 	maxPoints : String,
 	eventTime : String,
 	eventDate : String,
-	eventBanner : { data: Buffer, contentType: String }
+	eventBanner : { data: Buffer, contentType: String },
+	isNotified : Boolean
 });
 
 //FCM device registration

@@ -24,6 +24,7 @@ module.exports.createEvent = function(req, res) {
   newEvent.maxPoints = eventPoints;
   newEvent.eventTime = eventTime;
   newEvent.eventDate = eventDate;
+  newEvent.isNotified = false;
 
   //saving data to mongodb
   newEvent.save(function(err, savedEvent) {
@@ -40,14 +41,30 @@ module.exports.createEvent = function(req, res) {
 
 //Get All events
 module.exports.getAllEvents = function(req, res) {
-  Event.find(function(err, events) {
-    if (err) {
-      res.status(500).send({'statusMessage' : 'error', 'message' : 'Internal server error'});
-    }
-    if (events != null && events.length > 0) {
-      res.status(200).send({'statusMessage' : 'success', 'message' : 'Events data available under events attributes','events' : events});
-    } else {
-      res.status(200).send({'statusMessage' : 'error', 'message' : 'No events data available'});
-    }
-  });
+  var isAdmin = req.query.isAdmin;
+  console.log("isAdmin", isAdmin);
+
+  if (isAdmin == 'true') {
+    Event.find(function(err, events) {
+      if (err) {
+        res.status(500).send({'statusMessage' : 'error', 'message' : 'Internal server error'});
+      }
+      if (events != null && events.length > 0) {
+        res.status(200).send({'statusMessage' : 'success', 'message' : 'Events data available under events attributes','events' : events});
+      } else {
+        res.status(200).send({'statusMessage' : 'error', 'message' : 'No events data available'});
+      }
+    });
+  } else {
+    Event.find({isNotified : true}, function(err, events) {
+      if (err) {
+        res.status(500).send({'statusMessage' : 'error', 'message' : 'Internal server error'});
+      }
+      if (events != null && events.length > 0) {
+        res.status(200).send({'statusMessage' : 'success', 'message' : 'Events data available under events attributes','events' : events});
+      } else {
+        res.status(200).send({'statusMessage' : 'error', 'message' : 'No events data available'});
+      }
+    });
+  }
 }

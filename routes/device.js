@@ -5,6 +5,7 @@ var gcm = require('node-gcm');
 var sender = new gcm.Sender('AAAAXd306w8:APA91bHHZ2c3BLRPvo-IZGm3sjMNGkfk1_Syy0A3BzPCZs7PkaFPRMHHBRo_Db6Sr9_wf7wXJhi1sgDWg4Mivg6Mn6nnUGD5FiyU4omeH1NgjxzLw18liPB5FZaC2U-z_lpBqyteRBUx');
 
 var Device = mongoose.model('Device');
+var Event = mongoose.model('Event');
 
 //Register Device
 module.exports.registerDevice = function(req, res) {
@@ -68,6 +69,10 @@ var fcm = function(deviceIds, eventName, about, time, date) {
         console.log("Error", err);
       } else {
         console.log("Response",response);
+        //update Event detail - isNotified to true
+        Event.update({eventName : eventName }, { $set: { isNotified: true }}, function(err, event){
+				console.log('Updated event ',event);
+			});
       }
   });
 }
