@@ -52,7 +52,7 @@ var deviceSchema = new mongoose.Schema({
 
 //Coming soon Schema
 var comingSoonSchema = new mongoose.Schema({
-	eventName : {type : String, unique : true},
+	eventName : {type : String},
 	eventBannerPath : { type : String }
 });
 

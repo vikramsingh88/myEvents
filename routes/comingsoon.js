@@ -27,7 +27,7 @@ module.exports.createComingSoon = function(req, res) {
       newBanner.eventBannerPath = fullUrl+"/images/event-banner/"+eventName+".png";
       newBanner.save(function(err, savedBannerPath) {
         if(err) {
-          var message="Error in creating banner";
+          var message="Error in creating banner "+err;
           console.log(message);
           res.status(500).send({'statusMessage' : 'error', 'message' : message});
         } else {
