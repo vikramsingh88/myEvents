@@ -30,9 +30,9 @@ module.exports.createComingSoon = function(req, res) {
         }
         if (deviceIds != null && deviceIds.length > 0) {
           fcm(deviceIds, bannerPath);
-          res.status(200).send({'statusMessage' : 'success', 'message' : message,'path' : savedBannerPath.eventBannerPath});
+          res.status(200).send({'statusMessage' : 'success', 'message' : message,'path' : bannerPath});
         } else {
-          res.status(500).send('Error');
+          res.status(500).send({'statusMessage' : 'error'});
         }
       });
     }
