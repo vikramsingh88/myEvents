@@ -22,27 +22,17 @@ module.exports.createComingSoon = function(req, res) {
       console.log(message);
       res.status(500).send({'statusMessage' : 'error', 'message' : message});
     } else {
-      var newBanner = new ComingSoon();
-      newBanner.eventName = eventName;
-      newBanner.eventBannerPath = fullUrl+"/images/event-banner/"+"banner"+".png";
-      newBanner.save(function(err, savedBannerPath) {
-        if(err) {
-          var message="Error in creating banner "+err;
-          console.log(message);
-          res.status(500).send({'statusMessage' : 'error', 'message' : message});
+      var bannerPath = fullUrl+"/images/event-banner/"+"banner"+".png";
+      var message="A new event banner created";
+      Device.find({}, 'registrationId -_id', function(err, deviceIds) {
+        if (err) {
+          res.status(500).send({'statusMessage' : 'error', 'message' : "Error in sending notification"});
+        }
+        if (deviceIds != null && deviceIds.length > 0) {
+          fcm(deviceIds, bannerPath);
+          res.status(200).send({'statusMessage' : 'success', 'message' : message,'path' : savedBannerPath.eventBannerPath});
         } else {
-          var message="A new event banner created";
-          Device.find({}, 'registrationId -_id', function(err, deviceIds) {
-            if (err) {
-              res.status(500).send('Error');
-            }
-            if (deviceIds != null && deviceIds.length > 0) {
-              fcm(deviceIds, savedBannerPath.eventBannerPath, savedBannerPath.eventName);
-              res.status(200).send({'statusMessage' : 'success', 'message' : message,'path' : savedBannerPath.eventBannerPath});
-            } else {
-              res.status(500).send('Error');
-            }
-          });
+          res.status(500).send('Error');
         }
       });
     }
@@ -66,11 +56,10 @@ module.exports.getComingSoon = function(req, res) {
 }
 
 //FCM method
-var fcm = function(deviceIds, path, eventName) {
+var fcm = function(deviceIds, path) {
   // Prepare a message to be sent
-  console.log("Name", eventName);
   var message = new gcm.Message({
-      data: { path : path, eventName : eventName }
+      data: { path : path}
   });
   // Specify which registration IDs to deliver the message to
   var regTokens = [];
