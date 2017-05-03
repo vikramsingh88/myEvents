@@ -42,9 +42,9 @@ module.exports.notify = function(req, res) {
     }
     if (deviceIds != null && deviceIds.length > 0) {
       fcm(deviceIds, eventName, about, time, date);
-      res.status(201).send('Success');
+      res.status(201).send({'statusMessage' : 'success', 'notified' : 'yes'});
     } else {
-      res.status(500).send('Error');
+      res.status(500).send({'statusMessage' : 'error', 'notified' : 'no'});
     }
   });
 }

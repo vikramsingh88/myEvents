@@ -16,7 +16,7 @@ module.exports.createComingSoon = function(req, res) {
   var eventBanner = req.body.banner;
   var eventName = req.body.eventName
   console.log("dirname", __dirname);
-  fs.writeFile(__dirname +'/../public/images/event-banner/'+eventName+".png", eventBanner, 'base64', function(err) {
+  fs.writeFile(__dirname +'/../public/images/event-banner/'+"banner"+".png", eventBanner, 'base64', function(err) {
     if(err) {
       var message="Error in creating banner - "+err;
       console.log(message);
@@ -24,7 +24,7 @@ module.exports.createComingSoon = function(req, res) {
     } else {
       var newBanner = new ComingSoon();
       newBanner.eventName = eventName;
-      newBanner.eventBannerPath = fullUrl+"/images/event-banner/"+eventName+".png";
+      newBanner.eventBannerPath = fullUrl+"/images/event-banner/"+"banner"+".png";
       newBanner.save(function(err, savedBannerPath) {
         if(err) {
           var message="Error in creating banner "+err;
