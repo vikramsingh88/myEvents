@@ -46,6 +46,8 @@ app.post('/scoreboard', scoreboard.createScoreBoard);
 app.get('/scoreboard', scoreboard.getScoreBoard);
 //Login
 app.post('/login', login.login);
+//inform about event
+app.post('/inform', comingSoon.inform);
 
 //for error handling
 app.use(function(req, res) {

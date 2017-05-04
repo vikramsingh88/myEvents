@@ -78,3 +78,41 @@ var fcm = function(deviceIds, path) {
       }
   });
 }
+
+//-------------------------------------------------------------------
+//inform about event
+module.exports.inform = function(req, res) {
+  var comment = req.body.comment;
+  Device.find({}, 'registrationId -_id', function(err, deviceIds) {
+    if (err) {
+      res.status(500).send({'statusMessage' : 'error', 'message' : "Error in sending notification"});
+    }
+    if (deviceIds != null && deviceIds.length > 0) {
+      fcmComent(deviceIds, comment, res);
+    } else {
+      res.status(500).send({'statusMessage' : 'error', 'message' : "Error in sending notification"});
+    }
+  });
+}
+
+var fcmComent = function(deviceIds, comment, res) {
+  // Prepare a message to be sent
+  var message = new gcm.Message({
+      data: { info : comment}
+  });
+  // Specify which registration IDs to deliver the message to
+  var regTokens = [];
+  for (var i = 0; i < deviceIds.length; i++) {
+    var device = deviceIds[i];
+    regTokens.push(device.registrationId);
+  }
+  console.log("deviceIds",regTokens);
+  // Actually send the message
+  sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+      if (err) {
+        res.status(500).send({'statusMessage' : 'error', 'message' : "Error in sending notification"});
+      } else {
+        res.status(200).send({'statusMessage' : 'success', 'message' : 'Notification sent'});
+      }
+  });
+}
