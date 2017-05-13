@@ -88,6 +88,25 @@ module.exports.updateTeamMember = function(req, res){
 	});
 }
 
+//Delete team member from given team
+module.exports.deleteTeamMember = function(req, res) {
+  console.log('In deleteTeamMember function');
+  //get value from url
+  var teamName = req.params.teamName;
+  //Get values from body sent within bodyParser
+  var id = req.body.id;
+  TeamMember.findByIdAndRemove(id, function (err, teamMember) {
+    if (err) {
+      res.status(500).send({'statusMessage' : 'error', 'message' : 'Internal server error'});
+    }
+    if (teamMember == null) {
+      res.status(200).send({'statusMessage' : 'error', 'message' : 'No mentioned member available'});
+    } else {
+      res.status(200).send({'statusMessage' : 'success', 'message' : 'Member deleted successfully','deleted' : teamMember});
+    }
+  });
+}
+
 //Get all member from a team
 module.exports.getTeamMember = function(req, res) {
   var teamName = req.params.teamName;

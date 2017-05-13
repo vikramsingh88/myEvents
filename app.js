@@ -27,6 +27,8 @@ app.get('/team/:teamName', team.getTeam);
 app.get('/team/:teamName/member', team.getTeamMember);
 //update team member details
 app.put('/team/:teamName/member', team.updateTeamMember);
+//delete member from team
+app.delete('/team/:teamName/member', team.deleteTeamMember);
 //get team logo by team name
 app.get('/team/logo/:teamName', team.getTeamLogo);
 //get team banner by team name
