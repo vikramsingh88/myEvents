@@ -55,6 +55,39 @@ module.exports.addTeamMember = function(req, res) {
   });
 }
 
+//Update team member details
+module.exports.updateTeamMember = function(req, res){
+  console.log('In updateTeamMember function');
+  //get value from url
+  var teamName = req.params.teamName;
+  //Get values from body sent within bodyParser
+  var teamMemberName = req.body.memberName;
+  var aboutMember = req.body.about;
+  var id = req.body.id;
+  TeamMember.update(
+    {
+      teamName: teamName,
+      _id : id
+    },
+      {
+        $set:
+        {
+          teamName: teamName,
+          memberName : teamMemberName,
+          aboutMember : aboutMember
+        }
+      }, function(err, teamMember){
+          if (err) {
+            res.status(500).send({'statusMessage' : 'error', 'message' : 'Internal server error'});
+          }
+          if (teamMember == null) {
+            res.status(200).send({'statusMessage' : 'error', 'message' : 'No mentioned member available'});
+          } else {
+            res.status(200).send({'statusMessage' : 'success', 'message' : 'Member data updated successfully','updated' : teamMember});
+          }
+	});
+}
+
 //Get all member from a team
 module.exports.getTeamMember = function(req, res) {
   var teamName = req.params.teamName;
