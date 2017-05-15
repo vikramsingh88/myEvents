@@ -26,6 +26,7 @@ module.exports.teaser = function(req, res) {
   // specify that we want to allow the user to upload multiple files in a single request
   form.multiples = true;
   // store all uploads in the /uploads directory
+  console.log("file ", __dirname);
   form.uploadDir = path.join(__dirname, '/uploads');
   // every time a file has been uploaded successfully,
   // rename it to it's orignal name
