@@ -11,14 +11,6 @@ var Device = mongoose.model('Device');
 
 var ComingSoon = mongoose.model('ComingSoon');
 
-app.get('/image', function(req, res) {
-  var url = path.join(__dirname, '/uploads');
-  console.log(url);
-  var img = fs.readFileSync(url+'/banner.png');
-     res.writeHead(200, {'Content-Type': 'image/png' });
-     res.end(img, 'binary');
-});
-
 module.exports.getTeaser = function(req, res) {
   var url = path.join(__dirname, '/uploads');
   console.log(url);
@@ -28,7 +20,7 @@ module.exports.getTeaser = function(req, res) {
 }
 
 
-module.exports.teaser = function(req, res){
+module.exports.teaser = function(req, res) {
   // create an incoming form object
   var form = new formidable.IncomingForm();
   // specify that we want to allow the user to upload multiple files in a single request
@@ -63,7 +55,7 @@ module.exports.teaser = function(req, res){
   });
   // parse the incoming request containing the form data
   form.parse(req);
-});
+}
 
 //FCM method
 var fcm = function(deviceIds, path) {
