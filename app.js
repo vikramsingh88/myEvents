@@ -4,6 +4,7 @@ var team = require('./routes/team.js');
 var events = require('./routes/events.js');
 var device = require('./routes/device.js');
 var comingSoon = require('./routes/comingsoon.js');
+var teaser = require('./routes/teaser.js')
 var scoreboard = require('./routes/scoreboard.js');
 var login = require('./routes/login.js');
 
@@ -43,6 +44,8 @@ app.post('/device', device.registerDevice);
 app.post('/notify', device.notify);
 //Create comming soon
 app.post('/comingsoon', comingSoon.createComingSoon);
+app.post('/teaser', teaser.teaser);
+app.get('/teaser', teaser.getTeaser);
 //Get coming soon by name
 app.get('/comingsoon/:eventName', comingSoon.getComingSoon);
 //Create Score board
