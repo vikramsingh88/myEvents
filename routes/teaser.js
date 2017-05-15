@@ -12,7 +12,7 @@ var Device = mongoose.model('Device');
 var ComingSoon = mongoose.model('ComingSoon');
 
 module.exports.getTeaser = function(req, res) {
-  var url = path.join(__dirname, '/uploads');
+  var url = __dirname +'/../uploads/';
   console.log(url);
   var img = fs.readFileSync(url+'/banner.png');
   res.writeHead(200, {'Content-Type': 'image/png' });
@@ -27,12 +27,11 @@ module.exports.teaser = function(req, res) {
   form.multiples = true;
   // store all uploads in the /uploads directory
   //__dirname +'/../public/images/event-banner/'+"banner"+".png"
-  var testPath = __dirname;
-  console.log("file ", testPath);
-  form.uploadDir = testPath;
+  var filePath = __dirname +'/../uploads/';
+  console.log("file ", filePath);
+  form.uploadDir = filePath;
   // every time a file has been uploaded successfully,
-  // rename it to it's orignal name
-  var filePath = path.join(form.uploadDir, "banner.png");
+  // rename it to it's orignal name  
   form.on('file', function(field, file) {
     fs.rename(file.path, path.join(form.uploadDir, "banner.png"));
   });
