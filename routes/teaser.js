@@ -27,7 +27,7 @@ module.exports.teaser = function(req, res) {
   form.multiples = true;
   // store all uploads in the /uploads directory
   //__dirname +'/../public/images/event-banner/'+"banner"+".png"
-  var testPath = __dirname +'/../uploads';
+  var testPath = __dirname;
   console.log("file ", testPath);
   form.uploadDir = testPath;
   // every time a file has been uploaded successfully,
